@@ -1,0 +1,283 @@
+mysql> INSERT INTO Paper (ID, Title, Abstract, Filename) VALUES ('0001','Title 01','This is the abstract of title 01', 'The Book of Magic');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Paper
+    -> ^C
+mysql> SELECT * FROM Paper;
++----+----------+----------------------------------+-------------------+
+| ID | Title    | Abstract                         | Filename          |
++----+----------+----------------------------------+-------------------+
+|  1 | Title 01 | This is the abstract of title 01 | The Book of Magic |
++----+----------+----------------------------------+-------------------+
+1 row in set (0.01 sec)
+
+mysql> INSERT INTO Paper (ID, Title, Abstract, Filename) VALUES ('0002','Title 02','This is the abstract of title 02', 'The Book of Wandering Souls');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Paper;
++----+----------+----------------------------------+-----------------------------+
+| ID | Title    | Abstract                         | Filename                    |
++----+----------+----------------------------------+-----------------------------+
+|  1 | Title 01 | This is the abstract of title 01 | The Book of Magic           |
+|  2 | Title 02 | This is the abstract of title 02 | The Book of Wandering Souls |
++----+----------+----------------------------------+-----------------------------+
+2 rows in set (0.01 sec)
+
+mysql> INSERT INTO Paper (ID, Title, Abstract, Filename) VALUES ('0003','Title 03','This is the abstract of title 03', 'The Day The Earth Stood Still');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Paper;
++----+----------+----------------------------------+-------------------------------+
+| ID | Title    | Abstract                         | Filename                      |
++----+----------+----------------------------------+-------------------------------+
+|  1 | Title 01 | This is the abstract of title 01 | The Book of Magic             |
+|  2 | Title 02 | This is the abstract of title 02 | The Book of Wandering Souls   |
+|  3 | Title 03 | This is the abstract of title 03 | The Day The Earth Stood Still |
++----+----------+----------------------------------+-------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Paper (ID, Title, Abstract, Filename) VALUES ('0004','Title 04','This is the abstract of title 04', 'The Book of Maps');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Paper;
++----+----------+----------------------------------+-------------------------------+
+| ID | Title    | Abstract                         | Filename                      |
++----+----------+----------------------------------+-------------------------------+
+|  1 | Title 01 | This is the abstract of title 01 | The Book of Magic             |
+|  2 | Title 02 | This is the abstract of title 02 | The Book of Wandering Souls   |
+|  3 | Title 03 | This is the abstract of title 03 | The Day The Earth Stood Still |
+|  4 | Title 04 | This is the abstract of title 04 | The Book of Maps              |
++----+----------+----------------------------------+-------------------------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO Author (EmailAddr, Firstname, Lastname) VALUES ('skinsella@abc.com', 'Sophie',  'Kinsella');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Author;
++-------------------+-----------+----------+
+| EmailAddr         | Firstname | Lastname |
++-------------------+-----------+----------+
+| skinsella@abc.com | Sophie    | Kinsella |
++-------------------+-----------+----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Author (EmailAddr, Firstname, Lastname) VALUES ('jkrowling@def.com', 'Joanne',  'Rowling');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Author;
++-------------------+-----------+----------+
+| EmailAddr         | Firstname | Lastname |
++-------------------+-----------+----------+
+| jkrowling@def.com | Joanne    | Rowling  |
+| skinsella@abc.com | Sophie    | Kinsella |
++-------------------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Author (EmailAddr, Firstname, Lastname) VALUES ('maxevans@geh.com', 'Max', 'Evans');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Author;
++-------------------+-----------+----------+
+| EmailAddr         | Firstname | Lastname |
++-------------------+-----------+----------+
+| jkrowling@def.com | Joanne    | Rowling  |
+| maxevans@geh.com  | Max       | Evans    |
+| skinsella@abc.com | Sophie    | Kinsella |
++-------------------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Author (EmailAddr, Firstname, Lastname) VALUES ('serenitywilliams@njk.com', 'Serenity', 'Williams');
+ERROR 1406 (22001): Data too long for column 'EmailAddr' at row 1
+mysql> INSERT INTO Author (EmailAddr, Firstname, Lastname) VALUES ('swilliams@njk.com', 'Serenity', 'Williams');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Author;
++-------------------+-----------+----------+
+| EmailAddr         | Firstname | Lastname |
++-------------------+-----------+----------+
+| jkrowling@def.com | Joanne    | Rowling  |
+| maxevans@geh.com  | Max       | Evans    |
+| skinsella@abc.com | Sophie    | Kinsella |
+| swilliams@njk.com | Serenity  | Williams |
++-------------------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommitteeFeedback, PhoneNum, Affiliation) VALUES ('wsmith@abc.com', 'Will', 'Smith', 'This is Author's Feedback', 'This is Comittee's Feedback', '3245567819', 'Affiliation 01');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's Feedback', 'This is Comittee's Feedback', '3245567819', 'Affiliation 01')' at line 1
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommitteeFeedback, PhoneNum, Affiliation) VALUES ('wsmith@abc.com', 'Will', 'Smith', 'This is Author/'s Feedback', 'This is Comittee's Feedback', '3245567819', 'Affiliation 01');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's Feedback', 'This is Comittee's Feedback', '3245567819', 'Affiliation 01')' at line 1
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommitteeFeedback, PhoneNum, Affiliation) VALUES ('wsmith@abc.com', 'Will', 'Smith', 'This is feedback of author', 'The feedback of committee', '2345789756', 'Affiliation 01');
+ERROR 1054 (42S22): Unknown column 'CommitteeFeedback' in 'field list'
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommiteeFeedback, PhoneNum, Affiliation) VALUES ('wsmith@abc.com', 'Will', 'Smith', 'This is feedback of author', 'The feedback of commitee', '2345789756', 'Affiliation 01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Reviewer;
++----------------+-----------+----------+----------------------------+--------------------------+------------+----------------+
+| EmailAddr      | Firstname | Lastname | AuthorFeedback             | CommiteeFeedback         | PhoneNum   | Affiliation    |
++----------------+-----------+----------+----------------------------+--------------------------+------------+----------------+
+| wsmith@abc.com | Will      | Smith    | This is feedback of author | The feedback of commitee | 2345789756 | Affiliation 01 |
++----------------+-----------+----------+----------------------------+--------------------------+------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommiteeFeedback, PhoneNum, Affiliation) VALUES ('cmartin@abc.com', 'Chris', 'Martin', 'This is feedback of author ab', 'The feedback of commitee ab', '2114567780', 'Affiliation 02');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Reviewer;
++-----------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+| EmailAddr       | Firstname | Lastname | AuthorFeedback                | CommiteeFeedback            | PhoneNum   | Affiliation    |
++-----------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+| cmartin@abc.com | Chris     | Martin   | This is feedback of author ab | The feedback of commitee ab | 2114567780 | Affiliation 02 |
+| wsmith@abc.com  | Will      | Smith    | This is feedback of author    | The feedback of commitee    | 2345789756 | Affiliation 01 |
++-----------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommiteeFeedback, PhoneNum, Affiliation) VALUES ('zoeyp@abc.com', 'Zoey', 'Parker', 'This is feedback of author tt', 'The feedback of commitee tt', '2990876522', 'Affiliation 03');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Reviewer;
++-----------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+| EmailAddr       | Firstname | Lastname | AuthorFeedback                | CommiteeFeedback            | PhoneNum   | Affiliation    |
++-----------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+| cmartin@abc.com | Chris     | Martin   | This is feedback of author ab | The feedback of commitee ab | 2114567780 | Affiliation 02 |
+| wsmith@abc.com  | Will      | Smith    | This is feedback of author    | The feedback of commitee    | 2345789756 | Affiliation 01 |
+| zoeyp@abc.com   | Zoey      | Parker   | This is feedback of author tt | The feedback of commitee tt | 2990876522 | Affiliation 03 |
++-----------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Reviewer (EmailAddr, Firstname, Lastname, AuthorFeedback, CommiteeFeedback, PhoneNum, Affiliation) VALUES ('harperchase@abc.com', 'Harper', 'Chase', 'This is feedback of author dd', 'The feedback of commitee dd', '2908875541', 'Affiliation 04');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Reviewer;
++---------------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+| EmailAddr           | Firstname | Lastname | AuthorFeedback                | CommiteeFeedback            | PhoneNum   | Affiliation    |
++---------------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+| cmartin@abc.com     | Chris     | Martin   | This is feedback of author ab | The feedback of commitee ab | 2114567780 | Affiliation 02 |
+| harperchase@abc.com | Harper    | Chase    | This is feedback of author dd | The feedback of commitee dd | 2908875541 | Affiliation 04 |
+| wsmith@abc.com      | Will      | Smith    | This is feedback of author    | The feedback of commitee    | 2345789756 | Affiliation 01 |
+| zoeyp@abc.com       | Zoey      | Parker   | This is feedback of author tt | The feedback of commitee tt | 2990876522 | Affiliation 03 |
++---------------------+-----------+----------+-------------------------------+-----------------------------+------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Reviewer (ID, Recommendation, MeritScore,ReadabilityScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0101', 'Recommendation from professor1', 'Above Average', 'Above Average', 'Above Average', 'Above average', '0001', 'wsmith@abc.com');
+ERROR 1054 (42S22): Unknown column 'ID' in 'field list'
+mysql> INSERT INTO Review (ID, Recommendation, MeritScore,ReadabilityScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0101', 'Recommendation from professor1', 'Above Average', 'Above Average', 'Above Average', 'Above average', '0001', 'wsmith@abc.com');
+ERROR 1054 (42S22): Unknown column 'ReadabilityScore' in 'field list'
+mysql> INSERT INTO Review (ID, Recommendation, MeritScore, ReadabilityScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0101', 'Recommendation from professor1', 'Above Average', 'Above Average', 'Above Average', 'Above average', '0001', 'wsmith@abc.com');
+ERROR 1054 (42S22): Unknown column 'ReadabilityScore' in 'field list'
+mysql> INSERT INTO Review (ID, Recommendation, MeritScore, ReadabiltyScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0101', 'Recommendation from professor1', 'Above Average', 'Above Average', 'Above Average', 'Above Average', '0001', 'wsmith@abc.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Review;
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+----------------+
+| ID  | Recommendation                 | MeritScore    | ReadabiltyScore | OriginalityScore | RelevanceScore | PaperID | ReviewerID     |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+----------------+
+| 101 | Recommendation from professor1 | Above Average | Above Average   | Above Average    | Above Average  |       1 | wsmith@abc.com |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+----------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Review (ID, Recommendation, MeritScore, ReadabiltyScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0102', 'Recommendation from professor2', 'Above Average', 'Average', 'Above Average', 'Average', '0002', 'cmartin@abc.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Review;
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+-----------------+
+| ID  | Recommendation                 | MeritScore    | ReadabiltyScore | OriginalityScore | RelevanceScore | PaperID | ReviewerID      |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+-----------------+
+| 101 | Recommendation from professor1 | Above Average | Above Average   | Above Average    | Above Average  |       1 | wsmith@abc.com  |
+| 102 | Recommendation from professor2 | Above Average | Average         | Above Average    | Average        |       2 | cmartin@abc.com |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Review (ID, Recommendation, MeritScore, ReadabiltyScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0103', 'Recommendation from professor3', 'Average', 'Average', 'Above Average', 'Average', '0003', 'zoeyp@abc.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Review;
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+-----------------+
+| ID  | Recommendation                 | MeritScore    | ReadabiltyScore | OriginalityScore | RelevanceScore | PaperID | ReviewerID      |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+-----------------+
+| 101 | Recommendation from professor1 | Above Average | Above Average   | Above Average    | Above Average  |       1 | wsmith@abc.com  |
+| 102 | Recommendation from professor2 | Above Average | Average         | Above Average    | Average        |       2 | cmartin@abc.com |
+| 103 | Recommendation from professor3 | Average       | Average         | Above Average    | Average        |       3 | zoeyp@abc.com   |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Review (ID, Recommendation, MeritScore, ReadabiltyScore, OriginalityScore, RelevanceScore, PaperID, ReviewerID) VALUES ('0104', 'Recommendation from professor4', 'Average', 'Below Average', 'Average', 'Above Average', '0004', 'harperchase@abc.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Review;
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+---------------------+
+| ID  | Recommendation                 | MeritScore    | ReadabiltyScore | OriginalityScore | RelevanceScore | PaperID | ReviewerID          |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+---------------------+
+| 101 | Recommendation from professor1 | Above Average | Above Average   | Above Average    | Above Average  |       1 | wsmith@abc.com      |
+| 102 | Recommendation from professor2 | Above Average | Average         | Above Average    | Average        |       2 | cmartin@abc.com     |
+| 103 | Recommendation from professor3 | Average       | Average         | Above Average    | Average        |       3 | zoeyp@abc.com       |
+| 104 | Recommendation from professor4 | Average       | Below Average   | Average          | Above Average  |       4 | harperchase@abc.com |
++-----+--------------------------------+---------------+-----------------+------------------+----------------+---------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Review (ID, TopicName) VALUE ('0111', 'Future of Computing and Artificial Intelligence');
+ERROR 1054 (42S22): Unknown column 'TopicName' in 'field list'
+mysql> INSERT INTO Topic (ID, TopicName) VALUE ('0111', 'Future of Computing and Artificial Intelligence');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Topic;
++-----+-------------------------------------------------+
+| ID  | TopicName                                       |
++-----+-------------------------------------------------+
+| 111 | Future of Computing and Artificial Intelligence |
++-----+-------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Topic (ID, TopicName) VALUE ('0112', 'Infinity Stones and Legacy');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Topic;
++-----+-------------------------------------------------+
+| ID  | TopicName                                       |
++-----+-------------------------------------------------+
+| 111 | Future of Computing and Artificial Intelligence |
+| 112 | Infinity Stones and Legacy                      |
++-----+-------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Topic (ID, TopicName) VALUE ('0113', 'Conspiracy of The Night King');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Topic;
++-----+-------------------------------------------------+
+| ID  | TopicName                                       |
++-----+-------------------------------------------------+
+| 111 | Future of Computing and Artificial Intelligence |
+| 112 | Infinity Stones and Legacy                      |
+| 113 | Conspiracy of The Night King                    |
++-----+-------------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Topic (ID, TopicName) VALUE ('0114', 'Global Warming and Hazards');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Topic;
++-----+-------------------------------------------------+
+| ID  | TopicName                                       |
++-----+-------------------------------------------------+
+| 111 | Future of Computing and Artificial Intelligence |
+| 112 | Infinity Stones and Legacy                      |
+| 113 | Conspiracy of The Night King                    |
+| 114 | Global Warming and Hazards                      |
++-----+-------------------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> notee

@@ -1,0 +1,440 @@
+mysql> CREATE TABLE Author (EmailAddr VARCHAR(20) NOT NULL, Firstname VARCHAR(20) NOT NULL, Lastname VARCHAR(20) NOT NULL, PRIMARY KEY (EmailAddr));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
++-----------------------------+
+2 rows in set (0.01 sec)
+
+mysql> DESCRIBE Author;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EmailAddr | varchar(20) | NO   | PRI | NULL    |       |
+| Firstname | varchar(20) | NO   |     | NULL    |       |
+| Lastname  | varchar(20) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Reviewer (EmailAddr VARCHAR(20) NOT NULL, Firstname VARCHAR(20) NOT NULL, Lastname VARCHAR(20) NOT NULL, AuthorFeedback VARCHAR(250) NOT NULL, CommiteeFeedback VARCHAR(250) NOT NULL, PhoneNum INT unsigned, PRIMARY KEY (EmailAddr));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Reviewer                    |
++-----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> SHOW Reviewer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Reviewer' at line 1
+mysql> DESCRIBE Reviewer;
++------------------+------------------+------+-----+---------+-------+
+| Field            | Type             | Null | Key | Default | Extra |
++------------------+------------------+------+-----+---------+-------+
+| EmailAddr        | varchar(20)      | NO   | PRI | NULL    |       |
+| Firstname        | varchar(20)      | NO   |     | NULL    |       |
+| Lastname         | varchar(20)      | NO   |     | NULL    |       |
+| AuthorFeedback   | varchar(250)     | NO   |     | NULL    |       |
+| CommiteeFeedback | varchar(250)     | NO   |     | NULL    |       |
+| PhoneNum         | int(10) unsigned | YES  |     | NULL    |       |
++------------------+------------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Review (ID INT unsigned NOT NULL AUTO_INCREMENT, Recommendation  VARCHAR(150) NOT NULL, MeritScore VARCHAR(20) NOT NULL, ReadabiltyScore VARCHAR(20) NOT NULL, OriginalityScore VARCHAR(20) NOT NULL, RelevanceScore VARCHAR(20) NOT NULL, ReviewerID INT unsigned NOT NULL AUTO_INCREMENT references Reviewer(EmailAddr), PRIMARY KEY (ID));
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> CREATE TABLE Review (ID INT unsigned NOT NULL AUTO_INCREMENT, Recommendation  VARCHAR(150) NOT NULL, MeritScore VARCHAR(20) NOT NULL, ReadabiltyScore VARCHAR(20) NOT NULL, OriginalityScore VARCHAR(20) NOT NULL, RelevanceScore VARCHAR(20) NOT NULL, PaperID INT references Paper(ID), ReviewerID INT references Reviewer(EmailAddr), PRIMARY KEY (ID));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
++-----------------------------+
+4 rows in set (0.01 sec)
+
+mysql> Describe Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(11)          | YES  |     | NULL    |                |
+| ReviewerID       | int(11)          | YES  |     | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperId) references to Paper(ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to Paper(ID)' at line 1
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperId) REFERENCES Paper(ID);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperId) unsigned REFERENCES Paper(ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unsigned REFERENCES Paper(ID)' at line 1
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperId) REFERENCES Paper(`ID`);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> CREATE TABLE Review (ID INT unsigned NOT NULL AUTO_INCREMENT, Recommendation  VARCHAR(150) NOT NULL, MeritScore VARCHAR(20) NOT NULL, ReadabiltyScore VARCHAR(20) NOT NULL, OriginalityScore VARCHAR(20) NOT NULL, RelevanceScore VARCHAR(20) NOT NULL, PaperID INT unsigned NOT NULL, ReviewerID INT unsigned NOT NULL, PRIMARY KEY (ID));
+ERROR 1050 (42S01): Table 'review' already exists
+mysql> CREATE TABLE Review (ID INT unsigned NOT NULL AUTO_INCREMENT, Recommendation  VARCHAR(150) NOT NULL, MeritScore VARCHAR(20) NOT NULL, ReadabiltyScore VARCHAR(20) NOT NULL, OriginalityScore VARCHAR(20) NOT NULL, RelevanceScore VARCHAR(20) NOT NULL, PaperID INT unsigned NOT NULL, ReviewerID INT unsigned NOT NULL, PRIMARY KEY (ID), FOREIGN KEY (PaperId) REFERENCES Paper(Id), FOREIGN KEY (ReviewerID) REFERENCES Reviewer(EmailAddr));
+ERROR 1050 (42S01): Table 'review' already exists
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperID) REFERENCES Paper(ID);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> ALTER TABLE Review DROP FOREIGN KEY PeperID;
+ERROR 1091 (42000): Can't DROP 'PeperID'; check that column/key exists
+mysql> ALTER TABLE Review DROP FOREIGN KEY  PaperID;
+ERROR 1091 (42000): Can't DROP 'PaperID'; check that column/key exists
+mysql> ALTER TABLE Review DROP PaperID;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperId) REFERENCES Paper(ID);
+ERROR 1072 (42000): Key column 'PaperId' doesn't exist in table
+mysql> ALTER TABLE Review ADD (PaperID INT unsigned NOT NULL);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE TABLE Review;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE Review' at line 1
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| ReviewerID       | int(11)          | YES  |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   |     | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Review ADD FOREIGN KEY (PaperId) REFERENCES Paper(ID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| ReviewerID       | int(11)          | YES  |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Review DROP ReviewerID;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Review ADD (ReviewerID INT unsigned NOT NULL);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
+| ReviewerID       | int(10) unsigned | NO   |     | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Review ADD FOREIGN KEY (ReviewerID) REFERENCES Reviewer(EmailAddr);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> ALTER TABLE Review ADD FOREIGN KEY (ReviewerID) REFERENCES Reviewer(EmailAddr);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> ALTER TABLE Review DROP ReviewerID;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Review ADD (ReviewerID INT unsigned NOT NULL);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
+| ReviewerID       | int(10) unsigned | NO   |     | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Review DROP ReviewerID;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Review ADD (ReviewerID VARCHAR(20) NOT NULL);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
+| ReviewerID       | varchar(20)      | NO   |     | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Review ADD FOREIGN KEY (ReviewerID) REFERENCES Reviewer(EmailAddr);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
+| ReviewerID       | varchar(20)      | NO   | MUL | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Topic (ID INT unsigned NOT NULL AUTO_INCREMENT, TopicName VARCHAR(50) NOT NULL, PRIMARY KEY (ID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESCRIBE Topic;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| ID        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| TopicName | varchar(50)      | NO   |     | NULL    |                |
++-----------+------------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE Author;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| EmailAddr | varchar(20) | NO   | PRI | NULL    |       |
+| Firstname | varchar(20) | NO   |     | NULL    |       |
+| Lastname  | varchar(20) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE Paper;
++----------+------------------+------+-----+---------+----------------+
+| Field    | Type             | Null | Key | Default | Extra          |
++----------+------------------+------+-----+---------+----------------+
+| ID       | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Title    | varchar(150)     | NO   |     | NULL    |                |
+| Abstract | varchar(500)     | NO   |     | NULL    |                |
+| Filename | varchar(150)     | NO   |     | NULL    |                |
++----------+------------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE Review;
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| ID               | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| Recommendation   | varchar(150)     | NO   |     | NULL    |                |
+| MeritScore       | varchar(20)      | NO   |     | NULL    |                |
+| ReadabiltyScore  | varchar(20)      | NO   |     | NULL    |                |
+| OriginalityScore | varchar(20)      | NO   |     | NULL    |                |
+| RelevanceScore   | varchar(20)      | NO   |     | NULL    |                |
+| PaperID          | int(10) unsigned | NO   | MUL | NULL    |                |
+| ReviewerID       | varchar(20)      | NO   | MUL | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+8 rows in set (0.12 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.01 sec)
+
+mysql> DESCRIBE Reviewer;
++------------------+------------------+------+-----+---------+-------+
+| Field            | Type             | Null | Key | Default | Extra |
++------------------+------------------+------+-----+---------+-------+
+| EmailAddr        | varchar(20)      | NO   | PRI | NULL    |       |
+| Firstname        | varchar(20)      | NO   |     | NULL    |       |
+| Lastname         | varchar(20)      | NO   |     | NULL    |       |
+| AuthorFeedback   | varchar(250)     | NO   |     | NULL    |       |
+| CommiteeFeedback | varchar(250)     | NO   |     | NULL    |       |
+| PhoneNum         | int(10) unsigned | YES  |     | NULL    |       |
++------------------+------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE Topic;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| ID        | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| TopicName | varchar(50)      | NO   |     | NULL    |                |
++-----------+------------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> SHOW TABLES;
++-----------------------------+
+| Tables_in_conference_review |
++-----------------------------+
+| Author                      |
+| Paper                       |
+| Review                      |
+| Reviewer                    |
+| Topic                       |
++-----------------------------+
+5 rows in set (0.03 sec)
+
+mysql> DESCRIBE Reviewer;
++------------------+------------------+------+-----+---------+-------+
+| Field            | Type             | Null | Key | Default | Extra |
++------------------+------------------+------+-----+---------+-------+
+| EmailAddr        | varchar(20)      | NO   | PRI | NULL    |       |
+| Firstname        | varchar(20)      | NO   |     | NULL    |       |
+| Lastname         | varchar(20)      | NO   |     | NULL    |       |
+| AuthorFeedback   | varchar(250)     | NO   |     | NULL    |       |
+| CommiteeFeedback | varchar(250)     | NO   |     | NULL    |       |
+| PhoneNum         | int(10) unsigned | YES  |     | NULL    |       |
++------------------+------------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Reviewer ADD (Affiliation VARCHAR(20));
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Reviewer;
++------------------+------------------+------+-----+---------+-------+
+| Field            | Type             | Null | Key | Default | Extra |
++------------------+------------------+------+-----+---------+-------+
+| EmailAddr        | varchar(20)      | NO   | PRI | NULL    |       |
+| Firstname        | varchar(20)      | NO   |     | NULL    |       |
+| Lastname         | varchar(20)      | NO   |     | NULL    |       |
+| AuthorFeedback   | varchar(250)     | NO   |     | NULL    |       |
+| CommiteeFeedback | varchar(250)     | NO   |     | NULL    |       |
+| PhoneNum         | int(10) unsigned | YES  |     | NULL    |       |
+| Affiliation      | varchar(20)      | YES  |     | NULL    |       |
++------------------+------------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+

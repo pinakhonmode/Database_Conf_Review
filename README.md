@@ -7,11 +7,11 @@
 
 `CREATE DATABASE —(Name of the Database)—;`
 
-*For display of Database
+* For display of Database
 
 `SHOW DATABASE;`
 
-*For using the specific database
+* For using the specific database
 
 `USE —(Name of the Database)—`
 
@@ -19,23 +19,23 @@
 
 `CREATE TABLE —(Name of the TABLE)—`
 
- *For display of TABLE
+ * For display of TABLE
 
 `SHOW TABLES;`
 
-*For describing the table of Database
+* For describing the table of Database
 
 `DESCRIBE —(Name of the TABLE)—;`
 
-*For Inserting values in the Tables
+* For Inserting values in the Tables
 
 `INSERT INTO —(Name of the TABLE)— (attributes of the TABLE) VALUES (‘abc’, ’def’);`
 
-*For Selecting a particular entity from a particular Table
+* For Selecting a particular entity from a particular Table
 
 `SELECT * FROM —(Name of the TABLE)—`
 
-*For modifications in the Table
+* For modifications in the Table
 
 `FOR ADDING`
 

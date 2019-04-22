@@ -3,44 +3,44 @@
 
 #  Part : 1
 ## Steps to follow in order to Create, Populate and Display the Database, Tables, Tuples and Attributes
-*For Creating Database
+* For Creating Database
 
-`CREATE DATABASE —(Name of the Database)—;`
+  `CREATE DATABASE —(Name of the Database)—;`
 
 * For display of Database
 
-`SHOW DATABASE;`
+  `SHOW DATABASE;`
 
 * For using the specific database
 
-`USE —(Name of the Database)—`
+  `USE —(Name of the Database)—`
 
 *For Table Creation
 
-`CREATE TABLE —(Name of the TABLE)—`
+  `CREATE TABLE —(Name of the TABLE)—`
 
  * For display of TABLE
 
-`SHOW TABLES;`
+  `SHOW TABLES;`
 
 * For describing the table of Database
 
-`DESCRIBE —(Name of the TABLE)—;`
+  `DESCRIBE —(Name of the TABLE)—;`
 
 * For Inserting values in the Tables
 
-`INSERT INTO —(Name of the TABLE)— (attributes of the TABLE) VALUES (‘abc’, ’def’);`
+  `INSERT INTO —(Name of the TABLE)— (attributes of the TABLE) VALUES (‘abc’, ’def’);`
 
 * For Selecting a particular entity from a particular Table
 
-`SELECT * FROM —(Name of the TABLE)—`
+  `SELECT * FROM —(Name of the TABLE)—`
 
 * For modifications in the Table
 
-`FOR ADDING`
+  `FOR ADDING`
 
-`ALTER TABLE —(Name of the Table)— ADD (ENTITY)`
+  `ALTER TABLE —(Name of the Table)— ADD (ENTITY)`
 
-`FOR DELETING`
+  `FOR DELETING`
 
-`ALTER TABLE —(Name of the Table)— DROP (ENTITY)`
+  `ALTER TABLE —(Name of the Table)— DROP (ENTITY)`

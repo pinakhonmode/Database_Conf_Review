@@ -15,11 +15,11 @@
 
   `USE —(Name of the Database)—`
 
-*For Table Creation
+* For Table Creation
 
   `CREATE TABLE —(Name of the TABLE)—`
 
- * For display of TABLE
+* For display of TABLE
 
   `SHOW TABLES;`
 

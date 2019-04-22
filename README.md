@@ -13,11 +13,11 @@
 
 * For using the specific database
 
-  `USE —(Name of the Database)—`
+  `USE —(Name of the Database)—;`
 
 * For Table Creation
 
-  `CREATE TABLE —(Name of the TABLE)—`
+  `CREATE TABLE —(Name of the TABLE)—;`
 
 * For display of TABLE
 
@@ -33,14 +33,14 @@
 
 * For Selecting a particular entity from a particular Table
 
-  `SELECT * FROM —(Name of the TABLE)—`
+  `SELECT * FROM —(Name of the TABLE)—;`
 
 * For modifications in the Table
 
   `FOR ADDING`
 
-  `ALTER TABLE —(Name of the Table)— ADD (ENTITY)`
+  `ALTER TABLE —(Name of the Table)— ADD (ENTITY);`
 
   `FOR DELETING`
 
-  `ALTER TABLE —(Name of the Table)— DROP (ENTITY)`
+  `ALTER TABLE —(Name of the Table)— DROP (ENTITY);`

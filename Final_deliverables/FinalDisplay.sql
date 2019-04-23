@@ -1,0 +1,16 @@
+SHOW TABLES;
+
+DESCRIBE Paper;
+SELECT * FROM Paper;
+
+DESCRIBE Author;
+SELECT * FROM Author;
+
+DESCRIBE Reviewer;
+SELECT * FROM Reviewer;
+
+DESCRIBE Review;
+SELECT * FROM Review;
+
+DESCRIBE Topic;
+SELECT * FROM Topic;
